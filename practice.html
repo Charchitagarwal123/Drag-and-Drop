@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop Example</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: darkcyan;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      cursor: grab;
+    }
+    #distance {
+      margin-top: 150px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box"></div>
+  <div id="distance">Distance: 0px</div>
+
+  <script>
+    const a = document.getElementById("box");
+    const b = document.getElementById("distance");
+
+    let x = 0;
+    let y = 0;
+    let Left = 0;
+    let Top = 0;
+    let isDragging = false;
+
+    a.addEventListener("mousedown", (event) => {
+      isDragging = true;
+      x = event.clientX - a.offsetLeft;
+      y = event.clientY - a.offsetTop;
+
+      Left = a.offsetLeft;
+      Top = a.offsetTop;
+    });
+
+    document.addEventListener("mousemove", (event) => {
+      if (!isDragging) return;
+
+      a.style.left = (event.clientX - x) + "px";
+      a.style.top = (event.clientY - y) + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+      if (!isDragging) return;
+      isDragging = false;
+
+      const dx = a.offsetLeft - Left;
+      const dy = a.offsetTop - Top;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      b.textContent = "Distance: " + Math.round(distance) + "px";
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
